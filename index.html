@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caixa MEI: planilha de controle financeiro para MEI e autônomo</title>
+<meta name="description" content="Planilha pronta pra MEI e autônomo controlar entradas, saídas, contas a pagar e receber, DAS e o limite de faturamento num painel só. Excel e Google Sheets.">
+<meta property="og:title" content="Caixa MEI: planilha de controle financeiro para MEI e autônomo">
+<meta property="og:description" content="Pare de misturar o dinheiro da empresa com o seu. Painel pronto, DAS e limite do MEI.">
+<meta property="og:image" content="img/capa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#12294A;--blue:#1D4A86;--green:#16A34A;--green-d:#128A3E;--mint:#6EE7B7;--ink:#1F2937;--muted:#5B6575;--bg:#F6F8FB;--line:#E1E7EF;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Poppins",sans-serif;color:var(--navy);line-height:1.15;letter-spacing:-.01em}
+h1{font-size:clamp(32px,8.4vw,52px);font-weight:800}
+h2{font-size:clamp(25px,6vw,36px);font-weight:700;margin-bottom:14px}
+h3{font-size:18px;font-weight:600;margin-bottom:4px}
+section{padding:54px 0}
+.btn{display:block;width:100%;text-align:center;background:var(--green);color:#fff;text-decoration:none;font:700 19px "Poppins",sans-serif;padding:18px 22px;border-radius:12px;transition:transform .15s,background .15s}
+.top .btn,.box .btn{box-shadow:0 10px 24px rgba(22,163,74,.30)}
+.btn:hover{background:var(--green-d);transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid #FBBF24;outline-offset:3px}
+.small{font-size:14px;color:var(--muted)}
+.center{text-align:center}
+
+/* topo */
+.top{background:#0F2444;color:#fff;padding:20px 0 48px}
+.brand{font:700 18px "Poppins";color:#fff;letter-spacing:.01em}
+.brand span{color:var(--mint)}
+.hero{display:grid;gap:30px;margin-top:30px;align-items:center}
+.top h1{color:#fff}
+.top h1 em{font-style:normal;color:var(--mint)}
+.lead{font-size:19px;color:#D6E4F7;margin:16px 0 22px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:14px;color:#C5D6EF}
+.trust span{display:inline-flex;align-items:center;gap:8px}
+.trust span::before{content:"";width:11px;height:6px;border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg);margin-top:-3px}
+.hero img{border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.price-line{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}
+.price-line strong{font:800 40px "Poppins";color:#fff}
+.price-line span{color:#C5D6EF;font-size:15px}
+
+/* dor */
+.pain{background:var(--bg)}
+.pain ul{list-style:none;margin-top:18px;display:grid;gap:12px}
+.pain li{background:#fff;border:1px solid var(--line);border-left:4px solid #E0A3A3;border-radius:8px;padding:15px 18px}
+.pain p.end{margin-top:18px;font-weight:600;color:var(--navy)}
+
+/* dentro */
+.feat{display:grid;gap:14px;margin-top:22px}
+.big-card{background:#F0F7F3;border:1px solid #CFE6D8;border-radius:16px;padding:22px}
+.big-card svg{width:30px;height:30px;color:var(--green-d);margin-bottom:12px}
+.big-card h3{font-size:20px;margin-bottom:6px}
+.big-card p{font-size:15.5px;color:#45554C}
+.rows{list-style:none;margin-top:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rows li{display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:flex-start;background:#fff}
+.rows li:last-child{border-bottom:0}
+.rows svg{flex:none;width:22px;height:22px;color:var(--green-d);margin-top:2px}
+.rows b{display:block;color:var(--navy);font-weight:600}
+.rows span{font-size:15px;color:var(--muted)}
+
+/* passos */
+.steps{background:var(--navy);color:#fff}
+.steps h2{color:#fff}
+.steps ol{list-style:none;counter-reset:s;display:grid;gap:14px;margin-top:20px}
+.steps li{counter-increment:s;position:relative;padding:4px 0 4px 54px;color:#D6E4F7}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--mint);color:var(--navy);font:700 18px "Poppins";display:grid;place-items:center}
+.steps b{color:#fff}
+
+/* oferta */
+.offer{background:var(--bg)}
+.box{background:#fff;border:2px solid var(--green);border-radius:20px;padding:28px 22px;max-width:520px;margin:22px auto 0;text-align:center;box-shadow:0 16px 40px rgba(18,41,74,.12)}
+.box .big{font:800 56px/1 "Poppins";color:var(--navy);margin:10px 0 4px}
+.box ul{list-style:none;text-align:left;margin:20px 0}
+.box li{padding:8px 0 8px 30px;position:relative;border-bottom:1px solid var(--line);font-size:16px}
+.box li::before{content:"";position:absolute;left:6px;top:15px;width:11px;height:6px;border-left:2px solid var(--green-d);border-bottom:2px solid var(--green-d);transform:rotate(-45deg)}
+.safe{margin-top:14px;font-size:14px;color:var(--muted)}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+details{background:#fff;border:1px solid var(--line);border-radius:8px;padding:15px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600;list-style:none;color:var(--navy)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;font-size:22px;line-height:1;color:var(--green-d)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;font-size:15.5px;color:var(--muted)}
+
+footer{background:#0F2444;color:#9FB4D4;padding:30px 0;font-size:13px}
+footer p+p{margin-top:8px}
+
+/* barra fixa */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:14px;box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+.sticky .p strong{font:800 22px "Poppins";color:var(--navy);display:block;line-height:1}
+.sticky .p small{font-size:12px;color:var(--muted)}
+.sticky .btn{padding:14px 18px;font-size:16px;box-shadow:none;flex:1}
+
+@media(min-width:800px){
+  body{padding-bottom:0}
+  section{padding:80px 0}
+  .hero{grid-template-columns:1.1fr .9fr;gap:48px}
+  .feat{grid-template-columns:1fr 1fr}
+  .steps ol{grid-template-columns:repeat(3,1fr)}
+  .steps li{padding:56px 0 0 0}
+  .btn{display:inline-block;width:auto;padding:18px 36px}
+  .box .btn{display:block;width:100%}
+  .sticky{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<!-- PIXEL DA META: troque SEU_PIXEL_ID e descomente. -->
+<!--
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','SEU_PIXEL_ID');fbq('track','PageView');fbq('track','ViewContent',{content_name:'Caixa MEI'});
+</script>
+-->
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">Caixa <span>MEI</span></div>
+    <div class="hero">
+      <div>
+        <h1>Pare de misturar o dinheiro da empresa com o <em>seu</em>.</h1>
+        <p class="lead">Planilha pronta pra MEI e autônomo controlar entradas, saídas, contas a pagar e receber, DAS e o limite de faturamento, num painel só. Pronta em 5 minutos.</p>
+        <div class="price-line"><strong>R$ 14,90</strong><span>pagamento único</span></div>
+        <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+        <div class="trust">
+          <span>Download na hora</span>
+          <span>Garantia de 7 dias</span>
+          <span>Pix, cartão ou boleto</span>
+        </div>
+      </div>
+      <img src="img/capa.png" alt="Painel da planilha Caixa MEI com entradas, saídas, lucro e limite do MEI. Exemplo ilustrativo." width="1080" height="1080">
+    </div>
+  </div>
+</header>
+
+<section class="pain">
+  <div class="wrap">
+    <h2>Você sabe quanto sobrou de verdade este mês?</h2>
+    <p>Quando o caixa vive na cabeça ou no extrato do banco, as perguntas simples ficam difíceis:</p>
+    <ul>
+      <li><b>Quanto entrou e quanto saiu</b> só da empresa, sem misturar com as contas pessoais?</li>
+      <li><b>Você já passou, ou está perto, do limite de faturamento do MEI?</b> Descobrir tarde dá dor de cabeça.</li>
+      <li><b>O DAS está em dia?</b> Esquecer pode gerar multa e juros.</li>
+      <li><b>Quem ainda te deve?</b> E quanto você precisa pagar essa semana?</li>
+    </ul>
+    <p class="end">O Caixa MEI responde tudo isso num painel só. Sem login e sem instalar nada.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>O que vem na planilha</h2>
+    <p>Uma planilha só. Sem login, sem instalar nada e sem mensalidade.</p>
+    <div class="feat">
+      <article class="big-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><h3>Painel do mês</h3><p>Escolha o mês e veja entradas, saídas, lucro e faturamento do ano. Tem a tabela dos 12 meses, a meta mensal e os gastos por categoria.</p></article>
+      <article class="big-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg><h3>Limite do MEI</h3><p>Uma barra mostra quanto do limite anual você já usou. Passou de 80%, aparece o aviso de que está perto.</p></article>
+    </div>
+    <ul class="rows">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg><div><b>Contas a pagar e a receber</b><span>O que está pendente e quanto já venceu.</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg><div><b>Calendário do DAS</b><span>Marque o que pagou. O próximo vencimento aparece no painel.</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><div><b>Empresa e Pessoal separados</b><span>Mostra quanto gasto pessoal saiu da conta da empresa.</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg><div><b>Lançamentos com listas prontas</b><span>Você escolhe tipo, categoria e forma de pagamento, sem digitar.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="wrap">
+    <h2>Como funciona</h2>
+    <ol>
+      <li><b>Configure.</b> Preencha seu nome, o ano e o valor do DAS. Leva 2 minutos.</li>
+      <li><b>Lance.</b> Registre cada entrada e saída. Uma linha por movimento.</li>
+      <li><b>Acompanhe.</b> Abra o painel e veja tudo pronto, sem fazer conta.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="offer" id="comprar">
+  <div class="wrap center">
+    <h2>R$ 14,90 e a planilha é sua</h2>
+    <p>Um pagamento só. Sem mensalidade.</p>
+    <div class="box">
+      <strong>Caixa MEI</strong>
+      <div class="big">R$ 14,90</div>
+      <div class="small">pagamento único</div>
+      <ul>
+        <li>Planilha completa em Excel, também abre no Google Sheets</li>
+        <li>Painel, limite do MEI, DAS e contas a pagar e receber</li>
+        <li>Download imediato depois do pagamento</li>
+        <li>Garantia de 7 dias</li>
+      </ul>
+      <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+      <p class="safe">Compra segura pela Hotmart. Pix, cartão ou boleto.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="center">Perguntas frequentes</h2>
+    <div class="faq" style="margin-top:22px">
+      <details><summary>Funciona no celular?</summary><p>Sim, abrindo no Google Sheets ou no Excel. No computador fica mais confortável pra lançar vários itens.</p></details>
+      <details><summary>Preciso saber Excel?</summary><p>Não. Você só preenche as células amarelas e a planilha calcula o resto.</p></details>
+      <details><summary>Serve pra quem não é MEI?</summary><p>Serve pra autônomos em geral. O controle do limite e do DAS é pensado pro MEI.</p></details>
+      <details><summary>Substitui o meu contador?</summary><p>Não. A planilha organiza o seu caixa. Impostos e declarações continuam com você e o seu contador. Valores como o limite do MEI e o DAS ficam editáveis, pra você conferir nos canais oficiais.</p></details>
+      <details><summary>Como recebo?</summary><p>Logo depois da confirmação do pagamento você recebe o link de download por e-mail.</p></details>
+      <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias pra pedir o reembolso pela Hotmart.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="steps" style="padding:46px 0">
+  <div class="wrap center">
+    <h2>Saiba onde está o seu dinheiro</h2>
+    <p style="color:#D6E4F7;margin-bottom:22px">Menos de R$ 15 pra parar de adivinhar.</p>
+    <a class="btn js-cta" href="CHECKOUT_URL" style="max-width:420px;margin:0 auto">Quero o Caixa MEI</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Caixa MEI é uma planilha de organização financeira. Não é consultoria contábil, jurídica ou tributária e não substitui o seu contador. Limite de faturamento, valor do DAS e prazos mudam com o tempo. Confira sempre no Portal do Empreendedor.</p>
+    <p>As imagens mostram exemplos ilustrativos. Os resultados dependem do uso que você fizer da planilha.</p>
+    <p>© 2026 Caixa MEI. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="sticky">
+  <div class="p"><strong>R$ 14,90</strong><small>pagamento único</small></div>
+  <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+</div>
+
+<script>
+// Evento de intenção de compra (só dispara se o pixel da Meta estiver ativo)
+document.querySelectorAll('.js-cta').forEach(function (a) {
+  a.addEventListener('click', function () {
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Caixa MEI', value: 14.90, currency: 'BRL' }); } catch (e) {}
+  });
+});
+</script>
+</body>
+</html>
