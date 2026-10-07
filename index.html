@@ -133,7 +133,7 @@ fbq('init','1852168836195121');fbq('track','PageView');fbq('track','ViewContent'
         <h1>Pare de misturar o dinheiro da empresa com o <em>seu</em>.</h1>
         <p class="lead">Planilha pronta pra MEI e autônomo controlar entradas, saídas, contas a pagar e receber, DAS e o limite de faturamento, num painel só. Pronta em 5 minutos.</p>
         <div class="price-line"><strong>R$ 14,90</strong><span>pagamento único</span></div>
-        <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+        <a class="btn js-cta" href="https://pay.hotmart.com/V107934823A?bid=1791414622511">Quero o Caixa MEI</a>
         <div class="trust">
           <span>Download na hora</span>
           <span>Garantia de 7 dias</span>
@@ -201,7 +201,7 @@ fbq('init','1852168836195121');fbq('track','PageView');fbq('track','ViewContent'
         <li>Download imediato depois do pagamento</li>
         <li>Garantia de 7 dias</li>
       </ul>
-      <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+      <a class="btn js-cta" href="https://pay.hotmart.com/V107934823A?bid=1791414622511">Quero o Caixa MEI</a>
       <p class="safe">Compra segura pela Hotmart. Pix, cartão ou boleto.</p>
     </div>
   </div>
@@ -225,7 +225,7 @@ fbq('init','1852168836195121');fbq('track','PageView');fbq('track','ViewContent'
   <div class="wrap center">
     <h2>Saiba onde está o seu dinheiro</h2>
     <p style="color:#D6E4F7;margin-bottom:22px">Menos de R$ 15 pra parar de adivinhar.</p>
-    <a class="btn js-cta" href="CHECKOUT_URL" style="max-width:420px;margin:0 auto">Quero o Caixa MEI</a>
+    <a class="btn js-cta" href="https://pay.hotmart.com/V107934823A?bid=1791414622511" style="max-width:420px;margin:0 auto">Quero o Caixa MEI</a>
   </div>
 </section>
 
@@ -239,14 +239,26 @@ fbq('init','1852168836195121');fbq('track','PageView');fbq('track','ViewContent'
 
 <div class="sticky">
   <div class="p"><strong>R$ 14,90</strong><small>pagamento único</small></div>
-  <a class="btn js-cta" href="CHECKOUT_URL">Quero o Caixa MEI</a>
+  <a class="btn js-cta" href="https://pay.hotmart.com/V107934823A?bid=1791414622511">Quero o Caixa MEI</a>
 </div>
 
 <script>
-// Evento de intenção de compra (só dispara se o pixel da Meta estiver ativo)
+// Eventos da Meta ao clicar em qualquer botão de compra: AddToCart e InitiateCheckout.
+// Espera um instante antes de abrir o checkout, pra os eventos saírem do navegador.
 document.querySelectorAll('.js-cta').forEach(function (a) {
-  a.addEventListener('click', function () {
-    try { if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Caixa MEI', value: 14.90, currency: 'BRL' }); } catch (e) {}
+  a.addEventListener('click', function (e) {
+    var dados = { content_name: 'Caixa MEI', content_type: 'product', content_ids: ['caixa-mei'], value: 14.90, currency: 'BRL' };
+    try {
+      if (window.fbq) {
+        fbq('track', 'AddToCart', dados);
+        fbq('track', 'InitiateCheckout', dados);
+      }
+    } catch (err) {}
+    // Ctrl/Cmd/Shift ou botão do meio: deixa o navegador abrir em nova aba normalmente
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
+    var destino = a.href;
+    setTimeout(function () { window.location.href = destino; }, 250);
   });
 });
 </script>
